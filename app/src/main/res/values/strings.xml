@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Hunt Chat</string>
+
+    <!-- Strings related to firebase -->
+    <string name="firebase_user">Users</string>
+    <string name="firebase_username">username</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is invalid</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="error_taken_username">This username is already taken</string>
+
+    <string name="version">v 1.0</string>
+    <string name="register">Newbie? Register here!</string>
+    <string name="title_activity_register">Register</string>
+
+    <!-- Strings related to Settings -->
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+    <string name="title_username">Username</string>
+    <string name="default_username">johnSmith123</string>
+    <string name="title_email">Email</string>
+    <string name="default_email">john_smith@gmail.com</string>
+    <string name="title_password">Password</string>
+    <string name="title_profilePic">Upload profile picture</string>
+    <string name="title_pushNoti">Allow push notification for public game</string>
+    <string name="register_btn">Join!</string>
+
+    <string name="title_activity_tabbed">Hunt Chat</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+</resources>

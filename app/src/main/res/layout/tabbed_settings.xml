@@ -1,0 +1,295 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.kelly.hunt_chat.TabbedActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/section_label_profile"
+                android:layout_width="fill_parent"
+                android:layout_height="20dp"
+                android:background="@color/lightGrey"/>
+
+            <RelativeLayout
+                android:id="@+id/settings_tabbed_layout_profile_pic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/section_label_profile"
+                android:padding="10dp"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground">
+
+                <TextView
+                    android:id="@+id/settings_tabbed_profile_pic_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profile Picture"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:layout_centerVertical="true"/>
+
+                <ImageView
+                    android:id="@+id/settings_tabbed_profile_pic_value"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/settings_tabbed_line_0"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey"
+                android:layout_below="@+id/settings_tabbed_layout_profile_pic"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+            <RelativeLayout
+                android:id="@+id/settings_tabbed_layout_display_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_tabbed_line_0"
+                android:padding="10dp"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground">
+
+                <TextView
+                    android:id="@+id/settings_tabbed_display_name_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Display Name"
+                    android:textAppearance="?android:textAppearanceSmall" />
+
+                <TextView
+                    android:id="@+id/settings_tabbed_display_name_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignBottom="@+id/settings_tabbed_display_name_text"
+                    android:text="Display Name"
+                    android:textStyle="italic"/>
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/settings_tabbed_line_1"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey"
+                android:layout_below="@+id/settings_tabbed_layout_display_name"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+            <RelativeLayout
+                android:id="@+id/settings_tabbed_layout_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_tabbed_line_1"
+                android:padding="10dp"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground">
+
+                <TextView
+                    android:id="@+id/settings_tabbed_username_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Username"
+                    android:textAppearance="?android:textAppearanceSmall" />
+
+                <TextView
+                    android:id="@+id/settings_tabbed_username_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignBottom="@+id/settings_tabbed_username_text"
+                    android:text="Username"
+                    android:textStyle="italic"/>
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/settings_tabbed_line_2"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey"
+                android:layout_below="@+id/settings_tabbed_layout_username"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+            <RelativeLayout
+                android:id="@+id/settings_tabbed_layout_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_tabbed_line_2"
+                android:padding="10dp"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground">
+
+                <TextView
+                    android:id="@+id/settings_tabbed_email_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:textAppearance="?android:textAppearanceSmall" />
+
+                <TextView
+                    android:id="@+id/settings_tabbed_email_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignBottom="@+id/settings_tabbed_email_text"
+                    android:text="Email"
+                    android:textStyle="italic"/>
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/settings_tabbed_line_3"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey"
+                android:layout_below="@+id/settings_tabbed_layout_email"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+            <RelativeLayout
+                android:id="@+id/settings_tabbed_layout_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_tabbed_line_3"
+                android:padding="10dp"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground">
+
+                <TextView
+                    android:id="@+id/settings_tabbed_password_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Password"
+                    android:textAppearance="?android:textAppearanceSmall" />
+
+                <TextView
+                    android:id="@+id/settings_tabbed_password_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignBottom="@+id/settings_tabbed_password_text"
+                    android:text="****" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/settings_tabbed_line_4"
+                android:layout_width="fill_parent"
+                android:layout_height="20dp"
+                android:layout_below="@+id/settings_tabbed_layout_password"
+                android:background="@color/lightGrey"/>
+
+            <RelativeLayout
+                android:id="@+id/settings_tabbed_layout_addID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_tabbed_line_4"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/settings_tabbed_addID_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Allow others to add me by username"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:layout_centerVertical="true"/>
+
+                <Switch
+                    android:id="@+id/settings_tabbed_addID_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:checked="true"
+                    android:text="" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/settings_tabbed_line_5"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey"
+                android:layout_below="@+id/settings_tabbed_layout_addID"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+            <RelativeLayout
+                android:id="@+id/settings_tabbed_layout_push"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_tabbed_line_5"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/settings_tabbed_push_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Allow push notification for public game"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:layout_centerVertical="true"/>
+
+                <Switch
+                    android:id="@+id/settings_tabbed_push_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:checked="true"
+                    android:text="" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/settings_tabbed_line_6"
+                android:layout_width="fill_parent"
+                android:layout_height="20dp"
+                android:layout_below="@+id/settings_tabbed_layout_push"
+                android:background="@color/lightGrey"/>
+
+            <Button
+                android:id="@+id/settings_tabbed_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/settings_tabbed_line_6"
+                android:layout_gravity="start"
+                android:background="@color/windowBackground"
+                android:padding="10dp"
+                android:text="Logout"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:stateListAnimator="@null"
+                android:textStyle="normal"/>
+
+            <View
+                android:id="@+id/settings_tabbed_line_7"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/settings_tabbed_logout"
+                android:background="@color/lightGrey"/>
+
+
+        </RelativeLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</android.support.constraint.ConstraintLayout>

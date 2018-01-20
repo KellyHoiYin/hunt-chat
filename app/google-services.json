@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "561820832591",
+    "firebase_url": "https://hunt-chat.firebaseio.com",
+    "project_id": "hunt-chat",
+    "storage_bucket": "hunt-chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561820832591:android:f9944f36965af7d6",
+        "android_client_info": {
+          "package_name": "com.kelly.hunt_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "561820832591-v9gkuvme2jqpavnplf1f8tijp2bd7mb4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kelly.hunt_chat",
+            "certificate_hash": "80b9791568d06fc7fb6903fdadbdd0f40a7a45dd"
+          }
+        },
+        {
+          "client_id": "561820832591-h0nrfhr3tvlk0bm7m778f5oe2qnbo814.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0WiZ5oeyEzye1w7ZHoAV6kx078qwNBhA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561820832591-h0nrfhr3tvlk0bm7m778f5oe2qnbo814.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
