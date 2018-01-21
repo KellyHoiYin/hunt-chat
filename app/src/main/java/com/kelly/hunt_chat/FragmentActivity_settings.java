@@ -1,9 +1,17 @@
 package com.kelly.hunt_chat;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +25,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +36,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by User on 11/14/2017.
@@ -52,6 +64,10 @@ public class FragmentActivity_settings extends Fragment implements View.OnClickL
     private RelativeLayout layoutEmail;
     private RelativeLayout layoutPassword;
 
+    private ImageHandler imHandler;
+
+    public static final int PICK_IMAGE = 1;
+    public static final int GRANT_READ_STORAGE_PERMISSION = 1;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
@@ -75,6 +91,8 @@ public class FragmentActivity_settings extends Fragment implements View.OnClickL
         layoutEmail = (RelativeLayout) view.findViewById(R.id.settings_tabbed_layout_email);
         layoutPassword = (RelativeLayout) view.findViewById(R.id.settings_tabbed_layout_password);
 
+        imHandler = new ImageHandler();
+
         firebaseAuth = FirebaseAuth.getInstance();
 
         final FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -95,14 +113,25 @@ public class FragmentActivity_settings extends Fragment implements View.OnClickL
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e("FragementSettings", databaseError.getMessage());
+                Log.e("FragmentSettings", databaseError.getMessage());
             }
         });
 
-        Glide.with(this /* context */)
-                .using(new FirebaseImageLoader())
-                .load(storageReference)
-                .into(textImage);
+        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getActivity()/* context */)
+                        .using(new FirebaseImageLoader())
+                        .load(storageReference)
+                        .into(textImage);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                textImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_texture_black_24dp));
+            }
+        });
+
 
         btnLogout.setOnClickListener(this);
         layoutProfilePic.setOnClickListener(this);
@@ -114,7 +143,6 @@ public class FragmentActivity_settings extends Fragment implements View.OnClickL
         return view;
     }
 
-
     @Override
     public void onClick(View v) {
         if(v == btnLogout){
@@ -124,11 +152,19 @@ public class FragmentActivity_settings extends Fragment implements View.OnClickL
         }
 
         if(v == layoutProfilePic){
-            Toast.makeText(this.getActivity(), "Layout Profile clicked", Toast.LENGTH_SHORT).show();
+            if (ContextCompat.checkSelfPermission(getActivity(),
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                        GRANT_READ_STORAGE_PERMISSION);
+            } else {
+                getImage();
+            }
         }
 
         if(v == layoutDisplayName){
-            Toast.makeText(this.getActivity(), "Layout Display name clicked", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getActivity(), Settings_display_name.class));
         }
 
         if(v == layoutUsername){
@@ -142,5 +178,53 @@ public class FragmentActivity_settings extends Fragment implements View.OnClickL
         if(v == layoutPassword){
             Toast.makeText(this.getActivity(), "Layout Password clicked", Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
+
+            Bundle extras = data.getExtras();
+            //get the cropped bitmap
+            Bitmap bmp = extras.getParcelable("data");
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+//            image = stream.toByteArray();
+
+            textImage.setImageBitmap(imHandler.getResizedBitmap(bmp));
+            textImage.setBackgroundColor(Color.WHITE);
+
+            storageReference.putBytes(stream.toByteArray());
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case GRANT_READ_STORAGE_PERMISSION : {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getImage();
+                } else {
+                    Toast.makeText(getActivity(), "Permission denied, the application might not work as expected.", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
+    }
+
+    private void getImage(){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        intent.putExtra("crop", true);
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 200);
+        intent.putExtra("outputY", 200);
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, PICK_IMAGE);
     }
 }

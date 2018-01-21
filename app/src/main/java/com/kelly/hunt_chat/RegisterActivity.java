@@ -52,6 +52,8 @@ import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.kelly.hunt_chat.ImageHandler;
+
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnRegister;
@@ -71,6 +73,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private StorageReference storageReference;
 
     private byte[] image;
+    private ImageHandler imHandler;
 
     public static final int PICK_IMAGE = 1;
     public static final int GRANT_READ_STORAGE_PERMISSION = 1;
@@ -99,6 +102,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.firebase_user));
         storageReference = FirebaseStorage.getInstance().getReference();
+
+        imHandler = new ImageHandler();
     }
 
     private void registerUser(){
@@ -216,43 +221,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
-//            Uri selectedImage = data.getData();
-//            String[] filePathColumn = {MediaStore.Images.Media.DATA };
-//
-//            Cursor selectedCursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-//            selectedCursor.moveToFirst();
-//
-//            int columnIndex = selectedCursor.getColumnIndex(filePathColumn[0]);
-//            String picturePath = selectedCursor.getString(columnIndex);
-//            selectedCursor.close();
-//
-//            Bitmap bmp = BitmapFactory.decodeFile(picturePath);
-//
-//            ExifInterface exif = null;
-//            try {
-//                File pictureFile = new File(picturePath);
-//                exif = new ExifInterface(pictureFile.getAbsolutePath());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            int orientation = ExifInterface.ORIENTATION_NORMAL;
-//
-//            if (exif != null)
-//                orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-//
-//            switch (orientation) {
-//                case ExifInterface.ORIENTATION_ROTATE_90:
-//                    bmp = rotateBitmap(bmp, 90);
-//                    break;
-//                case ExifInterface.ORIENTATION_ROTATE_180:
-//                    bmp = rotateBitmap(bmp, 180);
-//                    break;
-//
-//                case ExifInterface.ORIENTATION_ROTATE_270:
-//                    bmp = rotateBitmap(bmp, 270);
-//                    break;
-//            }
 
             Bundle extras = data.getExtras();
             //get the cropped bitmap
@@ -262,7 +230,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             image = stream.toByteArray();
 
-            editImage.setImageBitmap(getResizedBitmap(bmp));
+            editImage.setImageBitmap(imHandler.getResizedBitmap(bmp));
             editImage.setBackgroundColor(Color.WHITE);
         }
     }
@@ -292,29 +260,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         intent.putExtra("outputY", 200);
         intent.putExtra("return-data", true);
         startActivityForResult(intent, PICK_IMAGE);
-    }
-
-    public static Bitmap rotateBitmap(Bitmap bitmap, int degrees) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(degrees);
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-    }
-
-    public Bitmap getResizedBitmap(Bitmap image) {
-        int maxSize = 300;
-        int width = image.getWidth();
-        int height = image.getHeight();
-
-        float bitmapRatio = (float) width / (float) height;
-        if (bitmapRatio > 1) {
-            width = maxSize;
-            height = (int) (width / bitmapRatio);
-        } else {
-            height = maxSize;
-            width = (int) (height * bitmapRatio);
-        }
-
-        return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
     private boolean isPasswordValid(String password) {

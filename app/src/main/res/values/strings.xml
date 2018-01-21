@@ -4,6 +4,7 @@
     <!-- Strings related to firebase -->
     <string name="firebase_user">Users</string>
     <string name="firebase_username">username</string>
+    <string name="firebase_displayname">name</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -42,4 +43,5 @@
         <item>3</item>
     </string-array>
 
+    <string name="settings_display_name">Change your display name</string>
 </resources>
