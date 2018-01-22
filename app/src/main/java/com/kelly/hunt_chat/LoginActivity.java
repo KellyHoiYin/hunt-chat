@@ -37,6 +37,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,8 +114,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             pd.dismiss();
 
                             if (task.isSuccessful()) {
-                                finish();
-                                startActivity(new Intent(getApplicationContext(), TabbedActivity.class));
+                                checkIfEmailVerified();
                             } else {
                                 Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
@@ -135,6 +135,35 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
             startActivity(new Intent(this, RegisterActivity.class));
         }
+    }
+
+    private void checkIfEmailVerified(){
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if(user.isEmailVerified()){
+            finish();
+            startActivity(new Intent(getApplicationContext(), TabbedActivity.class));
+        } else {
+            Toast.makeText(this, "Email is not yet verified. A new verification email will be sent.", Toast.LENGTH_SHORT).show();
+            sendVerificationEmail();
+        }
+    }
+
+    private void sendVerificationEmail(){
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        user.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            firebaseAuth.signOut();
+                            Toast.makeText(getApplicationContext(), "A new verification email is sent. Please verify to login.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            firebaseAuth.signOut();
+                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
     }
 }

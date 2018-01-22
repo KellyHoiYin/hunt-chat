@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kelly.hunt_chat.Settings_display_name">
+    tools:context="com.kelly.hunt_chat.Settings_username">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,33 +12,33 @@
         android:orientation="vertical">
 
         <View
-            android:id="@+id/settings_display_name_tabbed_0"
+            android:id="@+id/settings_username_tabbed_0"
             android:layout_width="fill_parent"
             android:layout_height="20dp"
             android:background="@color/lightGrey"/>
 
         <EditText
-            android:id="@+id/settings_display_name_input"
+            android:id="@+id/settings_username_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/settings_display_name_tabbed_0"
+            android:layout_below="@+id/settings_username_tabbed_0"
             android:maxLines="1"
             android:inputType="text"/>
 
         <View
-            android:id="@+id/settings_display_name_tabbed_1"
+            android:id="@+id/settings_username_tabbed_1"
             android:layout_width="fill_parent"
             android:layout_height="20dp"
-            android:layout_below="@+id/settings_display_name_input"
+            android:layout_below="@+id/settings_username_input"
             android:background="@color/lightGrey"/>
 
         <Button
-            android:id="@+id/settings_display_name_button"
+            android:id="@+id/settings_username_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/settings_display_name_tabbed_1"
+            android:layout_below="@+id/settings_username_tabbed_1"
             android:layout_gravity="start"
             android:background="@color/windowBackground"
             android:padding="10dp"
@@ -49,10 +49,10 @@
             android:textStyle="normal"/>
 
         <View
-            android:id="@+id/settings_display_name_tabbed_2"
+            android:id="@+id/settings_username_tabbed_2"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_below="@+id/settings_display_name_button"
+            android:layout_below="@+id/settings_username_button"
             android:background="@color/lightGrey"/>
     </RelativeLayout>
 

@@ -111,9 +111,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         editEmail.setError(null);
         editPassword.setError(null);
         editUserame.setError(null);
+        editDisplayName.setError(null);
 
         String email = editEmail.getText().toString().trim();
         String password = editPassword.getText().toString().trim();
+        String username = editUserame.getText().toString().trim();
+        String displayName = editDisplayName.getText().toString().trim();
 
         boolean cancel = false;
 
@@ -135,6 +138,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 editPassword.setError(getString(R.string.error_invalid_password));
                 cancel = true;
             }
+        }
+
+        if(TextUtils.isEmpty(username)){
+            editUserame.setError(getString(R.string.error_field_required));
+            cancel = true;
+        }
+
+        if(TextUtils.isEmpty(displayName)){
+            editDisplayName.setError(getString(R.string.error_field_required));
+            cancel = true;
         }
 
         if(!cancel) {
@@ -170,22 +183,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            progressDialog.dismiss();
-                            Toast.makeText(RegisterActivity.this, "Registered!", Toast.LENGTH_SHORT).show();
-
-                            String name = editDisplayName.getText().toString().trim();
-                            String username = editUserame.getText().toString().trim();
-                            boolean push = editPushNoti.isChecked();
-
-                            UserInformation userInformation = new UserInformation(name, username, push, true);
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-
-                            databaseReference.child(user.getUid()).setValue(userInformation);
-
-                            storageReference.child(getString(R.string.firebase_user)).child(user.getUid()).putBytes(image);
-
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), TabbedActivity.class));
+                            sendVerificationEmail();
                         } else {
                             progressDialog.dismiss();
                             Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -270,5 +268,60 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         matcher = pattern.matcher(password);
 
         return matcher.matches();
+    }
+
+    private void sendVerificationEmail(){
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        user.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            saveExtraUserData();
+                        } else {
+                            Log.e("RegisterActivity", task.getException().getMessage());
+                            deleteUser();
+                        }
+                    }
+                });
+    }
+
+    private void saveExtraUserData(){
+        String name = editDisplayName.getText().toString().trim();
+        String username = editUserame.getText().toString().trim();
+        boolean push = editPushNoti.isChecked();
+
+        UserInformation userInformation = new UserInformation(name, username, push, true);
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        databaseReference.child(user.getUid()).setValue(userInformation);
+
+        if(image != null){
+            storageReference.child(getString(R.string.firebase_user)).child(user.getUid()).putBytes(image);
+        }
+
+        Toast.makeText(RegisterActivity.this, "Registered!", Toast.LENGTH_SHORT).show();
+
+        progressDialog.dismiss();
+
+        firebaseAuth.signOut();
+        finish();
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+    }
+
+    private void deleteUser(){
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(getApplicationContext(), "Registration failed due to verification email error. ", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e("RegisterActivity", "Error while removing the user after failure to send the verfication email. ");
+                }
+            }
+        });
     }
 }

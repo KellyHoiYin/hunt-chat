@@ -38,7 +38,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:text="@string/pref_title_display_name" />
+            android:text="@string/pref_title_display_name"/>
 
         <EditText
             android:id="@+id/reg_input_displayName"
@@ -48,7 +48,8 @@
             android:layout_alignStart="@+id/reg_text_dislayName"
             android:layout_below="@+id/reg_text_dislayName"
             android:inputType="textPersonName"
-            android:hint="@string/pref_default_display_name" />
+            android:hint="@string/pref_default_display_name"
+            android:maxLines="1"/>
 
         <TextView
             android:id="@+id/reg_text_username"
@@ -68,7 +69,8 @@
             android:layout_alignStart="@+id/reg_text_username"
             android:layout_below="@+id/reg_text_username"
             android:inputType="textPersonName"
-            android:hint="@string/default_username" />
+            android:hint="@string/default_username"
+            android:maxLines="1"/>
 
         <TextView
             android:id="@+id/reg_text_email"
@@ -88,7 +90,8 @@
             android:layout_alignStart="@+id/reg_text_email"
             android:layout_below="@+id/reg_text_email"
             android:inputType="textEmailAddress"
-            android:hint="@string/default_email" />
+            android:hint="@string/default_email"
+            android:maxLines="1"/>
 
         <TextView
             android:id="@+id/reg_text_password"
@@ -108,7 +111,8 @@
             android:layout_alignStart="@+id/reg_text_password"
             android:layout_below="@+id/reg_text_password"
             android:hint="@string/prompt_password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:maxLines="1"/>
 
         <TextView
             android:id="@+id/reg_text_profilePic"

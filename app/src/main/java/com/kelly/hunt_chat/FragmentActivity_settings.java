@@ -168,7 +168,7 @@ public class FragmentActivity_settings extends Fragment implements View.OnClickL
         }
 
         if(v == layoutUsername){
-            Toast.makeText(this.getActivity(), "Layout Username clicked", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getActivity(), Settings_username.class));
         }
 
         if(v == layoutEmail){
