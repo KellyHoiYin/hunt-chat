@@ -16,6 +16,8 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_taken_username">This username is already taken</string>
+    <string name="error_password_not_match">The password entered does not match</string>
+    <string name="error_password_constraint">Password must be at least 8 characters long with at least one uppercase, one lowercase and one digit</string>
 
     <string name="version">v 1.0</string>
     <string name="register">Newbie? Register here!</string>
@@ -30,14 +32,19 @@
     <string name="title_email">Email</string>
     <string name="default_email">john_smith@gmail.com</string>
     <string name="title_password">Password</string>
+    <string name="title_password_confirm">Confirm password</string>
     <string name="title_profilePic">Upload profile picture</string>
     <string name="title_pushNoti">Allow push notification for public game</string>
     <string name="register_btn">Join!</string>
+
+    <string name="title_new_password">New password</string>
+    <string name="title_new_password_confirm">Confirm new password</string>
 
     <string name="title_activity_tabbed">Hunt Chat</string>
     <string name="action_settings">Settings</string>
 
     <string name="save_changes">Save changes</string>
+    <string name="confirm">Confirm</string>
 
     <string-array name="list_preference_entry_values">
         <item>1</item>
@@ -46,4 +53,8 @@
     </string-array>
 
     <string name="settings_display_name">Change your display name</string>
+    <string name="settings_username">Change your user name</string>
+    <string name="settings_email">Change your email address</string>
+    <string name="settings_password">Change your password</string>
+
 </resources>

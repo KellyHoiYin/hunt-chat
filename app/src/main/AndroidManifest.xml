@@ -40,8 +40,18 @@
         <activity
             android:name=".Settings_display_name"
             android:label="@string/settings_display_name"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".Settings_username"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Settings_username"
+            android:label="@string/settings_username"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Settings_email"
+            android:label="@string/settings_email"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Settings_password"
+            android:label="@string/settings_password"
+            android:screenOrientation="portrait" ></activity>
     </application>
 
 </manifest>

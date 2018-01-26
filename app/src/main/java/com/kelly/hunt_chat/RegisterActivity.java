@@ -59,6 +59,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private Button btnRegister;
     private EditText editEmail;
     private EditText editPassword;
+    private EditText editPasswordConfirm;
     private TextView textSignin;
 
     private EditText editDisplayName;
@@ -89,6 +90,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         btnRegister = (Button) findViewById(R.id.reg_btn_register);
         editEmail = (EditText) findViewById(R.id.reg_input_email);
         editPassword = (EditText) findViewById(R.id.reg_input_password);
+        editPasswordConfirm = (EditText) findViewById(R.id.reg_input_password_confirm);
         textSignin = (TextView) findViewById(R.id.reg_text_signIn);
 
         editDisplayName = (EditText) findViewById(R.id.reg_input_displayName);
@@ -110,11 +112,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         // Reset errors
         editEmail.setError(null);
         editPassword.setError(null);
+        editPasswordConfirm.setError(null);
         editUserame.setError(null);
         editDisplayName.setError(null);
 
         String email = editEmail.getText().toString().trim();
         String password = editPassword.getText().toString().trim();
+        String passwordConfirm = editPasswordConfirm.getText().toString().trim();
         String username = editUserame.getText().toString().trim();
         String displayName = editDisplayName.getText().toString().trim();
 
@@ -135,9 +139,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             cancel = true;
         } else {
             if(!isPasswordValid(password)){
-                editPassword.setError(getString(R.string.error_invalid_password));
+                editPassword.setError(getString(R.string.error_password_constraint));
                 cancel = true;
             }
+        }
+
+        if(TextUtils.isEmpty(passwordConfirm)){
+            editPasswordConfirm.setError(getString(R.string.error_field_required));
+            cancel = true;
+        }
+
+        if(!TextUtils.isEmpty(password) && !TextUtils.isEmpty(passwordConfirm) && !TextUtils.equals(password, passwordConfirm)){
+            editPasswordConfirm.setError(getString(R.string.error_password_not_match));
+            cancel = true;
         }
 
         if(TextUtils.isEmpty(username)){
@@ -263,7 +277,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private boolean isPasswordValid(String password) {
         Pattern pattern;
         Matcher matcher;
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z]).{8,}$";
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(password);
 
