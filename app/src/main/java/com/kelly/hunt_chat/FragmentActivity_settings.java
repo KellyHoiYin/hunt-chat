@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -53,8 +54,8 @@ public class FragmentActivity_settings extends Fragment implements View.OnClickL
     private TextView textDisplayName;
     private TextView textUsername;
     private TextView textEmail;
-    private Switch textAddByID;
-    private Switch textIsPush;
+    private Switch switchAddByID;
+    private Switch switchIsPush;
 
     private Button btnLogout;
 
@@ -80,8 +81,8 @@ public class FragmentActivity_settings extends Fragment implements View.OnClickL
         textDisplayName = (TextView) view.findViewById(R.id.settings_tabbed_display_name_value);
         textUsername = (TextView) view.findViewById(R.id.settings_tabbed_username_value);
         textEmail = (TextView) view.findViewById(R.id.settings_tabbed_email_value);
-        textAddByID = (Switch) view.findViewById(R.id.settings_tabbed_addID_value);
-        textIsPush = (Switch) view.findViewById(R.id.settings_tabbed_push_value);
+        switchAddByID = (Switch) view.findViewById(R.id.settings_tabbed_addID_value);
+        switchIsPush = (Switch) view.findViewById(R.id.settings_tabbed_push_value);
 
         btnLogout = (Button) view.findViewById(R.id.settings_tabbed_logout);
 
@@ -106,9 +107,10 @@ public class FragmentActivity_settings extends Fragment implements View.OnClickL
                 UserInformation curUser = dataSnapshot.getValue(UserInformation.class);
                 textDisplayName.setText( curUser.getName() );
                 textUsername.setText( curUser.getUsername() );
-                textAddByID.setChecked( curUser.isAddUsername() );
+                switchAddByID.setChecked( curUser.isAddUsername() );
                 textEmail.setText( user.getEmail() );
-                textIsPush.setChecked( curUser.isPush() );
+                switchIsPush.setChecked( curUser.isPush() );
+                switchAddByID.setChecked( curUser.isAddUsername() );
             }
 
             @Override
@@ -132,6 +134,19 @@ public class FragmentActivity_settings extends Fragment implements View.OnClickL
             }
         });
 
+        switchAddByID.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                databaseReference.child(getString(R.string.firebase_add_by_username)).setValue(isChecked);
+            }
+        });
+
+        switchIsPush.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                databaseReference.child(getString(R.string.firebase_push)).setValue(isChecked);
+            }
+        });
 
         btnLogout.setOnClickListener(this);
         layoutProfilePic.setOnClickListener(this);

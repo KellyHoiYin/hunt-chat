@@ -5,6 +5,8 @@
     <string name="firebase_user">Users</string>
     <string name="firebase_username">username</string>
     <string name="firebase_displayname">name</string>
+    <string name="firebase_add_by_username">addUsername</string>
+    <string name="firebase_push">push</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
