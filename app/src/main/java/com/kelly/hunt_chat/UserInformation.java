@@ -7,10 +7,10 @@ import android.app.Activity;
  */
 
 public class UserInformation {
-    public String name;
-    public String username;
-    public boolean push;
-    public boolean addUsername;
+    private String name;
+    private String username;
+    private boolean push;
+    private boolean addUsername;
 
     public UserInformation(){}
 

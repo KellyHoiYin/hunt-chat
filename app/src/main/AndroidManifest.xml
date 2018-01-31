@@ -49,8 +49,12 @@
             android:name=".Settings_email"
             android:label="@string/settings_email"
             android:screenOrientation="portrait" />
-        <activity android:name=".Settings_password"
+        <activity
+            android:name=".Settings_password"
             android:label="@string/settings_password"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Friends_add_new"
+            android:label="@string/friends_add"
             android:screenOrientation="portrait" ></activity>
     </application>
 
