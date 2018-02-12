@@ -12,9 +12,9 @@
         <string name="firebase_fr_id">friends_req_id</string>
         <string name="firebase_fr_seen">seen</string>
 
-    <string name="firebase_friend_list">friends</string>
-        <string name="firebase_fl_id">friends_list_id</string>
-        <string name="firebase_fl_played">friends_played</string>
+    <string name="firebase_friend_list">friend_list</string>
+        <string name="firebase_fl_id">fl_id</string>
+        <string name="firebasse_fl_added_date">fl_added_date</string>
 
 
 
@@ -76,5 +76,6 @@
     <string name="username_does_not_exist">There is not user found with the username entered</string>
     <string name="add">Add</string>
     <string name="send_friend_req">Friend request sent</string>
+    <string name="send_friend_req_new">A new friend request sent</string>
 
 </resources>

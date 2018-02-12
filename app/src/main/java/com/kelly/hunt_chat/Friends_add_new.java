@@ -3,6 +3,7 @@ package com.kelly.hunt_chat;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,6 +41,8 @@ import java.util.Calendar;
 
 public class Friends_add_new extends AppCompatActivity implements View.OnClickListener{
 
+    private String Error_TAG = "AddFriendsByName";
+
     private EditText inputUsername;
     private RelativeLayout layout;
     private ImageView userImage;
@@ -48,6 +51,7 @@ public class Friends_add_new extends AppCompatActivity implements View.OnClickLi
     private TextView notFoundText;
 
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
 
@@ -77,6 +81,7 @@ public class Friends_add_new extends AppCompatActivity implements View.OnClickLi
         notFoundText.setVisibility(View.GONE);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.firebase_user));
         storageReference = FirebaseStorage.getInstance().getReference(getString(R.string.firebase_user));
 
@@ -99,8 +104,19 @@ public class Friends_add_new extends AppCompatActivity implements View.OnClickLi
 
                                 final String id = snapshot.split("=")[0].substring(1);
                                 userID = id;
-                                String displayField = snapshot.split("=")[3];
-                                userDisplayName.setText(displayField.substring(0, displayField.indexOf(",") ));
+
+                                databaseReference.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        UserInformation curUser = dataSnapshot.getValue(UserInformation.class);
+                                        userDisplayName.setText(curUser.getName());
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        Log.e(Error_TAG, databaseError.getMessage());
+                                    }
+                                });
 
                                 storageReference.child(id).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
@@ -119,7 +135,14 @@ public class Friends_add_new extends AppCompatActivity implements View.OnClickLi
 
                                 userImage.setVisibility(View.VISIBLE);
                                 userDisplayName.setVisibility(View.VISIBLE);
+
                                 addButton.setVisibility(View.VISIBLE);
+
+                                //ToDo set the button to disabled if the username is under friend list
+
+                                if(userID == firebaseUser.getUid()){
+                                    addButton.setEnabled(false);
+                                }
                             } else {
                                 notFoundText.setVisibility(View.VISIBLE);
                             }
@@ -127,7 +150,7 @@ public class Friends_add_new extends AppCompatActivity implements View.OnClickLi
 
                         @Override
                         public void onCancelled(DatabaseError firebaseError) {
-                            Log.e("AddFriendsByName", firebaseError.getMessage());
+                            Log.e(Error_TAG, firebaseError.getMessage());
                         }
                     });
 
@@ -157,16 +180,38 @@ public class Friends_add_new extends AppCompatActivity implements View.OnClickLi
         if(v == addButton){
             FirebaseUser user = firebaseAuth.getCurrentUser();
 
-            DatabaseReference newReq = databaseReference.child(userID).child(getString(R.string.firebase_friend_requests));
+            final DatabaseReference checkIfRequestSent = databaseReference.child(userID).child(getString(R.string.firebase_friend_requests));
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-            Calendar cal = Calendar.getInstance();
+            checkIfRequestSent.orderByChild(getString(R.string.firebase_fr_id)).equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()){
+                        checkIfRequestSent.child(dataSnapshot.getValue().toString().split("=")[0].substring(1)).removeValue();
+                        sendFriendRequest(getString(R.string.send_friend_req_new));
+                    } else {
+                        sendFriendRequest(getString(R.string.send_friend_req));
+                    }
+                }
 
-            FriendRequestObj fr = new FriendRequestObj(user.getUid(), false, dateFormat.format(cal.getTime()));
-            newReq.push().setValue(fr);
-
-            Toast.makeText(this, getString(R.string.send_friend_req), Toast.LENGTH_SHORT).show();
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e(Error_TAG, databaseError.getMessage());
+                }
+            });
         }
+    }
+
+    private void sendFriendRequest(String msg){
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        DatabaseReference newReq = databaseReference.child(userID).child(getString(R.string.firebase_friend_requests));
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        Calendar cal = Calendar.getInstance();
+
+        FriendRequestObj fr = new FriendRequestObj(user.getUid(), false, dateFormat.format(cal.getTime()));
+        newReq.push().setValue(fr);
+
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
 }
