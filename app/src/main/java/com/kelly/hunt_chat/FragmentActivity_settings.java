@@ -46,6 +46,8 @@ import java.io.ByteArrayOutputStream;
 
 public class FragmentActivity_settings extends Fragment implements View.OnClickListener{
 
+    final private String TAG = "SettingsFragment";
+
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
@@ -115,7 +117,7 @@ public class FragmentActivity_settings extends Fragment implements View.OnClickL
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e("FragmentSettings", databaseError.getMessage());
+                Log.e(TAG, databaseError.getMessage());
             }
         });
 

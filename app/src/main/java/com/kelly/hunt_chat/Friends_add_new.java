@@ -55,7 +55,7 @@ public class Friends_add_new extends AppCompatActivity implements View.OnClickLi
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
 
-    private String userID;
+    private String userID;      //the user ID entered
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,12 +89,14 @@ public class Friends_add_new extends AppCompatActivity implements View.OnClickLi
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    //reset the layout elements
                     layout.setVisibility(View.VISIBLE);
 
                     userImage.setVisibility(View.GONE);
                     userDisplayName.setVisibility(View.GONE);
                     addButton.setVisibility(View.GONE);
                     notFoundText.setVisibility(View.GONE);
+                    addButton.setEnabled(true);
 
                     databaseReference.orderByChild(getString(R.string.firebase_username)).equalTo(inputUsername.getText().toString().trim()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -138,9 +140,23 @@ public class Friends_add_new extends AppCompatActivity implements View.OnClickLi
 
                                 addButton.setVisibility(View.VISIBLE);
 
-                                //ToDo set the button to disabled if the username is under friend list
+                                //disable the button if the username entered is already a friend
+                                databaseReference.child(firebaseUser.getUid()).child(getString(R.string.firebase_friend_list))
+                                        .orderByChild(getString(R.string.firebase_fl_id))
+                                        .equalTo(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        if(dataSnapshot.exists()){
+                                            addButton.setEnabled(false);
+                                        }
+                                    }
 
-                                if(userID == firebaseUser.getUid()){
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {}
+                                });
+
+                                //disable the button if the username is to the signed in user
+                                if(userID.equals(firebaseUser.getUid())){
                                     addButton.setEnabled(false);
                                 }
                             } else {
