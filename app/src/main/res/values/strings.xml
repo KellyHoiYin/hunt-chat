@@ -78,4 +78,7 @@
     <string name="send_friend_req">Friend request sent</string>
     <string name="send_friend_req_new">A new friend request sent</string>
 
+    <!-- Strings related to friends -->
+    <string name="friend_list">Friend list</string>
+
 </resources>

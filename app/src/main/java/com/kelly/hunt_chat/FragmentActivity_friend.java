@@ -48,16 +48,19 @@ public class FragmentActivity_friend extends Fragment{
     private static final String TAG = "FriendActivity";
 
     private RelativeLayout fr_layout;
+
     private RecyclerView frRcv;
     private FirebaseRecyclerAdapter<FriendRequestObj, FriendRequestItemHolder> frAdapter;
+
+    private RecyclerView flRcv;
+    private FirebaseRecyclerAdapter<FriendObj, FriendListItemHolder> flAdapter;
 
     private FirebaseUser user;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
+    private DatabaseReference friendListReference;
     private DatabaseReference friendReqReference;
     private StorageReference storageReference;
-
-    private ArrayList<FriendRequestObj> frList;
 
     @Nullable
     @Override
@@ -68,21 +71,67 @@ public class FragmentActivity_friend extends Fragment{
         fr_layout = (RelativeLayout) view.findViewById(R.id.friend_request_layout);
         frRcv = (RecyclerView) view.findViewById(R.id.friend_request_rcv);
 
+        flRcv = (RecyclerView) view.findViewById(R.id.friend_list_rcv);
+
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.firebase_user));
         friendReqReference = FirebaseDatabase.getInstance().getReference(getString(R.string.firebase_user)).child(user.getUid()).child(getString(R.string.firebase_friend_requests));
+        friendListReference = FirebaseDatabase.getInstance().getReference(getString(R.string.firebase_user)).child(user.getUid()).child(getString(R.string.firebase_friend_list));
         storageReference = FirebaseStorage.getInstance().getReference(getString(R.string.firebase_user));
 
-        frList = new ArrayList<>();
+        //Friend List Handler
+        LinearLayoutManager flLayoutManager = new LinearLayoutManager(getActivity());
+        flRcv.setLayoutManager(flLayoutManager);
 
-        //ToDo Display friend List
+        Query query_friend_list = friendListReference.orderByKey();
+
+        flAdapter = new FirebaseRecyclerAdapter<FriendObj, FriendListItemHolder>(
+                FriendObj.class, R.layout.friend_list_item, FriendListItemHolder.class, query_friend_list
+        ) {
+            @Override
+            protected void populateViewHolder(final FriendListItemHolder viewHolder, FriendObj model, int position) {
+                final String friendID = model.getFl_id();
+
+                databaseReference.child(friendID).child(getString(R.string.firebase_displayname)).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        viewHolder.display_name.setText(dataSnapshot.getValue().toString());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        viewHolder.display_name.setText("");
+                    }
+                });
+
+                storageReference.child(friendID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Glide.with(getActivity())
+                                .using(new FirebaseImageLoader())
+                                .load(storageReference.child(friendID))
+                                .into(viewHolder.image);
+                    }
+                });
+
+                //ToDo add onclick to chat
+                viewHolder.layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getActivity(), "Direct to Chat later", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        };
+
+        flRcv.setAdapter(flAdapter);
 
         //Friend Request Handler
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
-        frRcv.setLayoutManager(layoutManager);
+        LinearLayoutManager frLayoutManager = new LinearLayoutManager(getActivity());
+        frLayoutManager.setReverseLayout(true);
+        frLayoutManager.setStackFromEnd(true);
+        frRcv.setLayoutManager(frLayoutManager);
 
         Query query_friend_req = friendReqReference.orderByKey();
 
@@ -91,7 +140,6 @@ public class FragmentActivity_friend extends Fragment{
         ) {
             @Override
             protected void populateViewHolder(final FriendRequestItemHolder viewHolder, FriendRequestObj model, int position) {
-                //ToDo get picture and set the name
                 final String requesterID = model.getFriends_req_id();
                 viewHolder.user_id.setText(requesterID);
                 viewHolder.date.setText(model.getDatetime());

@@ -33,9 +33,6 @@ public class FriendRequestItemHolder extends RecyclerView.ViewHolder {
     public ImageButton button_confirm;
     public ImageButton button_reject;
 
-    private FirebaseAuth firebaseAuth;
-    private DatabaseReference databaseReference;
-
     public FriendRequestItemHolder(View viewitem){
         super(viewitem);
 
