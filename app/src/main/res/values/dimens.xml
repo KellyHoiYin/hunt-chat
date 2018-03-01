@@ -7,4 +7,5 @@
 
     <dimen name="photo_size">50dp</dimen>
     <dimen name="small_margin">2dp</dimen>
+    <dimen name="mini_margin">1dp</dimen>
 </resources>

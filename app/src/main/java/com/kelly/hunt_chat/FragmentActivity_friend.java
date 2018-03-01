@@ -45,9 +45,7 @@ import java.util.Calendar;
 
 public class FragmentActivity_friend extends Fragment{
 
-    private static final String TAG = "FriendActivity";
-
-    private RelativeLayout fr_layout;
+    final private String TAG = "FriendActivity";
 
     private RecyclerView frRcv;
     private FirebaseRecyclerAdapter<FriendRequestObj, FriendRequestItemHolder> frAdapter;
@@ -68,7 +66,6 @@ public class FragmentActivity_friend extends Fragment{
         View view = inflater.inflate(R.layout.tabbed_friend, container, false);
         setHasOptionsMenu(true);
 
-        fr_layout = (RelativeLayout) view.findViewById(R.id.friend_request_layout);
         frRcv = (RecyclerView) view.findViewById(R.id.friend_request_rcv);
 
         flRcv = (RecyclerView) view.findViewById(R.id.friend_list_rcv);
@@ -119,7 +116,12 @@ public class FragmentActivity_friend extends Fragment{
                 viewHolder.layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getActivity(), "Direct to Chat later", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(), Chat_room.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(getString(R.string.chat_pass_type), getString(R.string.chat_type_chat));
+                        bundle.putString(getString(R.string.chat_pass_id), friendID);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                     }
                 });
             }

@@ -9,14 +9,44 @@
     <string name="firebase_push">push</string>
 
     <string name="firebase_friend_requests">friend_requests</string>
-        <string name="firebase_fr_id">friends_req_id</string>
-        <string name="firebase_fr_seen">seen</string>
+    <string name="firebase_fr_id">friends_req_id</string>
+    <string name="firebase_fr_seen">seen</string>
 
     <string name="firebase_friend_list">friend_list</string>
-        <string name="firebase_fl_id">fl_id</string>
-        <string name="firebasse_fl_added_date">fl_added_date</string>
+    <string name="firebase_fl_id">fl_id</string>
+    <string name="firebasse_fl_added_date">fl_added_date</string>
 
+    <string name="firebase_chat">Chats</string>
+    <string name="firebase_chat_type">chat_type</string>
+    <string name="firebase_chat_owner">chat_owner</string>
+    <string name="firebase_chat_public">chat_public</string>
+    <string name="firebase_chat_authorised">chat_authorised</string>
+    <string name="firebase_chat_title">chat_title</string>
+    <string name="firebase_chat_location">chat_location</string>
+    <string name="firebase_chat_status">chat_status</string>
+    <string name="firebase_chat_winner">chat_winner</string>
 
+    <string name="firebase_chat_participant">chat_participants</string>
+    <string name="firebase_chat_parti_id">chat_parti_id</string>
+    <string name="firebase_chat_parti_role">chat_parti_role</string>
+
+    <string name="firebase_chat_message">chat_messages</string>
+    <string name="firebase_chat_msg_content">chat_msg_content</string>
+    <string name="firebase_chat_msg_timestamp">chat_msg_timestamp</string>
+    <string name="firebase_chat_msg_type">chat_msg_type</string>
+    <string name="firebase_chat_msg_id">chat_msg_id</string>
+
+    <!-- Contants for chat type -->
+    <string name="chat_type_chat">1</string>
+    <string name="chat_type_game">2</string>
+    <string name="chat_pass_type">TYPE</string>
+    <string name="chat_pass_id">ID</string>
+
+    <!-- Strings related to participant type -->
+    <string name="chat_parti_host">1</string>
+    <string name="chat_parti_friend">2</string>
+    <string name="chat_parti_hunter">3</string>
+    <string name="chat_parti_analyser">4</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
