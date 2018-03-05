@@ -112,7 +112,6 @@ public class FragmentActivity_friend extends Fragment{
                     }
                 });
 
-                //ToDo add onclick to chat
                 viewHolder.layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

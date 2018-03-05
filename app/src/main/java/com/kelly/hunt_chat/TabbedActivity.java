@@ -1,5 +1,6 @@
 package com.kelly.hunt_chat;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -77,6 +78,12 @@ public class TabbedActivity extends AppCompatActivity {
             }
         });
 
+        final Intent intent = getIntent();
+        if (intent.hasExtra("TabNumber")) {
+            String tab = intent.getExtras().getString("TabNumber");
+            switchToTab(tab);
+        }
+
     }
 
     public void setToolbarTitle(String title) {
@@ -116,6 +123,20 @@ public class TabbedActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             return 5;
+        }
+    }
+
+    public void switchToTab(String tab){
+        if(tab.equals("0")){
+            mViewPager.setCurrentItem(0);
+        }else if(tab.equals("1")){
+            mViewPager.setCurrentItem(1);
+        }else if(tab.equals("2")){
+            mViewPager.setCurrentItem(2);
+        }else if(tab.equals("3")){
+            mViewPager.setCurrentItem(3);
+        }else if(tab.equals("4")){
+            mViewPager.setCurrentItem(4);
         }
     }
 }

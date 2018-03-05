@@ -2,20 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/small_margin">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
+        android:id="@+id/chat_menu_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryLight">
+        android:background="@color/colorPrimaryLight"
+        android:padding="@dimen/small_margin">
 
         <RelativeLayout
-            android:id="@+id/chat_menu_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:layout_margin="@dimen/mini_margin">
+            android:padding="@dimen/small_margin">
 
             <ImageView
                 android:id="@+id/chat_menu_image"

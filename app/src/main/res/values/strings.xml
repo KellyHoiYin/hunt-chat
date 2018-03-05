@@ -17,24 +17,24 @@
     <string name="firebasse_fl_added_date">fl_added_date</string>
 
     <string name="firebase_chat">Chats</string>
-    <string name="firebase_chat_type">chat_type</string>
-    <string name="firebase_chat_owner">chat_owner</string>
-    <string name="firebase_chat_public">chat_public</string>
-    <string name="firebase_chat_authorised">chat_authorised</string>
-    <string name="firebase_chat_title">chat_title</string>
-    <string name="firebase_chat_location">chat_location</string>
-    <string name="firebase_chat_status">chat_status</string>
-    <string name="firebase_chat_winner">chat_winner</string>
+    <string name="firebase_chat_type">type</string>
+    <string name="firebase_chat_owner">owner</string>
+    <string name="firebase_chat_public">publ</string>
+    <string name="firebase_chat_authorised">authorised</string>
+    <string name="firebase_chat_title">title</string>
+    <string name="firebase_chat_location">location</string>
+    <string name="firebase_chat_status">status</string>
+    <string name="firebase_chat_winner">winner</string>
 
-    <string name="firebase_chat_participant">chat_participants</string>
-    <string name="firebase_chat_parti_id">chat_parti_id</string>
-    <string name="firebase_chat_parti_role">chat_parti_role</string>
+    <string name="firebase_chat_participant">partis</string>
+    <string name="firebase_chat_parti_id">id</string>
+    <string name="firebase_chat_parti_role">role</string>
 
-    <string name="firebase_chat_message">chat_messages</string>
-    <string name="firebase_chat_msg_content">chat_msg_content</string>
-    <string name="firebase_chat_msg_timestamp">chat_msg_timestamp</string>
-    <string name="firebase_chat_msg_type">chat_msg_type</string>
-    <string name="firebase_chat_msg_id">chat_msg_id</string>
+    <string name="firebase_chat_message">messages</string>
+    <string name="firebase_chat_msg_content">content</string>
+    <string name="firebase_chat_msg_timestamp">timestamp</string>
+    <string name="firebase_chat_msg_type">type</string>
+    <string name="firebase_chat_msg_id">id</string>
 
     <!-- Contants for chat type -->
     <string name="chat_type_chat">1</string>
