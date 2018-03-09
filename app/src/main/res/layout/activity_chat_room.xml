@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kelly.hunt_chat.Chat_room">
+    tools:context="com.kelly.hunt_chat.Chat_room"
+    android:background="@color/lightGrey">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/small_margin">
+        android:padding="@dimen/margin_2">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/chat_msg_rcv"
@@ -33,7 +34,8 @@
             android:inputType="textMultiLine"
             android:gravity="left|center_vertical"
             android:background="@color/lightGrey"
-            android:paddingLeft="5dp"/>
+            android:paddingLeft="5dp"
+            android:backgroundTint="@color/white"/>
 
         <Button
             android:id="@+id/chat_send_button"

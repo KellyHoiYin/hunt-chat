@@ -6,6 +6,9 @@
     <dimen name="appbar_padding_top">8dp</dimen>
 
     <dimen name="photo_size">50dp</dimen>
-    <dimen name="small_margin">2dp</dimen>
-    <dimen name="mini_margin">1dp</dimen>
+    <dimen name="margin_2">2dp</dimen>
+    <dimen name="margin_1">1dp</dimen>
+    <dimen name="margin_3">3dp</dimen>
+    <dimen name="margin_5">5dp</dimen>
+    <dimen name="margin_10">10dp</dimen>
 </resources>

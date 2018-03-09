@@ -48,6 +48,10 @@
     <string name="chat_parti_hunter">3</string>
     <string name="chat_parti_analyser">4</string>
 
+    <!-- Strings related to message type -->
+    <string name="chat_msg_normal">1</string>
+    <string name="chat_msg_clue">2</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
