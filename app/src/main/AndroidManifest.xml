@@ -57,7 +57,8 @@
             android:name=".Friends_add_new"
             android:label="@string/friends_add"
             android:screenOrientation="portrait" />
-        <activity android:name=".Chat_room"></activity>
+        <activity android:name=".Chat_room"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

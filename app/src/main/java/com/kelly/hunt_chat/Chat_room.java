@@ -154,14 +154,6 @@ public class Chat_room extends AppCompatActivity implements View.OnClickListener
 
                                 //this message is sent by this logged in user
                                 if(userId.equals(user.getUid())){
-                                    RelativeLayout.LayoutParams image_lp = (RelativeLayout.LayoutParams) viewHolder.image.getLayoutParams();
-                                    image_lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                                    viewHolder.image.setLayoutParams(image_lp);
-
-                                    RelativeLayout.LayoutParams layout_lp = (RelativeLayout.LayoutParams) viewHolder.inner_layout.getLayoutParams();
-                                    layout_lp.addRule(RelativeLayout.LEFT_OF, viewHolder.image.getId());
-                                    viewHolder.inner_layout.setLayoutParams(layout_lp);
-
                                     viewHolder.message.setBackgroundResource(R.drawable.rounded_chat_right);
                                     RelativeLayout.LayoutParams msg_lp = (RelativeLayout.LayoutParams) viewHolder.message.getLayoutParams();
                                     msg_lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
@@ -170,10 +162,6 @@ public class Chat_room extends AppCompatActivity implements View.OnClickListener
                                     RelativeLayout.LayoutParams name_lp = (RelativeLayout.LayoutParams) viewHolder.display_name.getLayoutParams();
                                     name_lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                                     viewHolder.display_name.setLayoutParams(name_lp);
-                                } else {
-                                    RelativeLayout.LayoutParams layout_lp = (RelativeLayout.LayoutParams) viewHolder.inner_layout.getLayoutParams();
-                                    layout_lp.addRule(RelativeLayout.RIGHT_OF, viewHolder.image.getId());
-                                    viewHolder.inner_layout.setLayoutParams(layout_lp);
                                 }
 
                                 userRef.child(userId).child(getString(R.string.firebase_displayname)).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -188,24 +176,22 @@ public class Chat_room extends AppCompatActivity implements View.OnClickListener
                                     }
                                 });
 
-                                storageReferenceUser.child(userId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        Glide.with(getApplicationContext())
-                                                .using(new FirebaseImageLoader())
-                                                .load(storageReferenceUser.child(userId))
-                                                .into(viewHolder.image);
-                                    }
-                                });
-
                                 viewHolder.message.setText(model.getContent());
                                 viewHolder.message.setPadding(20,6,20,6);
                             }
                         };
 
+                        cMsgAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                            @Override
+                            public void onItemRangeInserted(int positionStart, int itemCount) {
+                                cMsgRcv.scrollToPosition(positionStart);
+                            }
+                        });
+
+
                         cMsgRcv.setAdapter(cMsgAdapter);
 
-                        break;
+//                        break;
                     } else {
                         //create a new chat when there is no record of this user with the friend conversation
                         if(chat_type.equals(getString(R.string.chat_type_chat))) {

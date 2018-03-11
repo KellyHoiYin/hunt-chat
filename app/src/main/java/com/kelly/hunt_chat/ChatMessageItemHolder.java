@@ -11,7 +11,6 @@ import android.widget.TextView;
  */
 
 public class ChatMessageItemHolder extends RecyclerView.ViewHolder {
-    public ImageView image;
     public TextView display_name;
     public RelativeLayout layout;
     public RelativeLayout inner_layout;
@@ -20,7 +19,6 @@ public class ChatMessageItemHolder extends RecyclerView.ViewHolder {
     public ChatMessageItemHolder(View viewitem){
         super(viewitem);
 
-        image = (ImageView) itemView.findViewById(R.id.chat_msg_image);
         display_name = (TextView) itemView.findViewById(R.id.chat_msg_name);
         message = (TextView) itemView.findViewById(R.id.chat_msg_msg);
         layout = (RelativeLayout) itemView.findViewById(R.id.chat_msg_layout);

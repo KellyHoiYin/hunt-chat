@@ -10,12 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/chat_msg_image"
-                android:layout_width="@dimen/photo_size"
-                android:layout_height="@dimen/photo_size"
-                app:srcCompat="@drawable/ic_texture_black_24dp"/>
-
             <RelativeLayout
                 android:id="@+id/chat_msg_inner_layout"
                 android:layout_width="wrap_content"

@@ -8,9 +8,11 @@
     android:background="@color/lightGrey">
 
     <ScrollView
+        android:id="@+id/chat_room_sv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/margin_2">
+        android:padding="@dimen/margin_2"
+        android:layout_marginBottom="@dimen/photo_size">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/chat_msg_rcv"
