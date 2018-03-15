@@ -61,9 +61,12 @@ public class FragmentActivity_chat extends Fragment{
         storageReferenceUser = FirebaseStorage.getInstance().getReference(getString(R.string.firebase_user));
 
         //Friend List Handler
-        LinearLayoutManager flLayoutManager = new LinearLayoutManager(getActivity());
-        chatRcv.setLayoutManager(flLayoutManager);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        chatRcv.setLayoutManager(layoutManager);
 
+        //Todo sort base on the latest update
         Query queryChat = databaseReferenceChat.orderByKey();
 
         chatAdapter = new FirebaseRecyclerAdapter<ChatObj, ChatMenuItemHolder>(
@@ -130,8 +133,29 @@ public class FragmentActivity_chat extends Fragment{
                                     }
                                 } else {
                                     if(model.getType().equals(getString(R.string.chat_type_game))){
-                                        //Todo load the game details
-                                        Toast.makeText(getActivity(), "Type 2", Toast.LENGTH_SHORT).show();
+                                        viewHolder.display_name.setText(model.getTitle());
+
+                                        storageReferenceChat.child(chatId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                            @Override
+                                            public void onSuccess(Uri uri) {
+                                                Glide.with(getActivity())
+                                                        .using(new FirebaseImageLoader())
+                                                        .load(storageReferenceChat.child(chatId))
+                                                        .into(viewHolder.image);
+                                            }
+                                        });
+
+                                        viewHolder.layout.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent = new Intent(getActivity(), Chat_room.class);
+                                                Bundle bundle = new Bundle();
+                                                bundle.putString(getString(R.string.chat_pass_type), getString(R.string.chat_type_game));
+                                                bundle.putString(getString(R.string.chat_pass_id), chatId);
+                                                intent.putExtras(bundle);
+                                                startActivity(intent);
+                                            }
+                                        });
                                     }
                                 }
 

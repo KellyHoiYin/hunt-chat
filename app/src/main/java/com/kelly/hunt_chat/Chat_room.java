@@ -70,10 +70,6 @@ public class Chat_room extends AppCompatActivity implements View.OnClickListener
         chat_type = getIntent().getExtras().getString(getString(R.string.chat_pass_type));
         passed_id = getIntent().getExtras().getString(getString(R.string.chat_pass_id));
 
-        if(chat_type.equals(getString(R.string.chat_type_game))){
-            chat_id = passed_id;
-        }
-
         cMsgRcv = (RecyclerView) findViewById(R.id.chat_msg_rcv);
         input_text = (EditText) findViewById(R.id.chat_input_text);
         send_button = (Button) findViewById(R.id.chat_send_button);
@@ -104,13 +100,20 @@ public class Chat_room extends AppCompatActivity implements View.OnClickListener
                                     }
                                 }
                             }
-
-//                            if(recordExist)
                         }
-                    } //Todo handle the request when it is a game
+                    }
+                    else {
+                        //the id is passed when this is triggered, so it must exist
+                        recordExist = true;
+                    }
 
                     if(recordExist) {
                         chat_id = snapshot.getKey();
+
+                        if(chat_type.equals(getString(R.string.chat_type_game))){
+                            chat_id = passed_id;
+                        }
+
                         msgRef = databaseReference.child(chat_id).child(getString(R.string.firebase_chat_message));
 
                         //setting the chat name
@@ -137,8 +140,6 @@ public class Chat_room extends AppCompatActivity implements View.OnClickListener
                                 setTitle(cur.getTitle());
                             }
                         }
-
-                        //Todo Display the chat history
 
                         LinearLayoutManager flLayoutManager = new LinearLayoutManager(getApplicationContext());
                         cMsgRcv.setLayoutManager(flLayoutManager);
@@ -191,7 +192,7 @@ public class Chat_room extends AppCompatActivity implements View.OnClickListener
 
                         cMsgRcv.setAdapter(cMsgAdapter);
 
-//                        break;
+                        break;
                     } else {
                         //create a new chat when there is no record of this user with the friend conversation
                         if(chat_type.equals(getString(R.string.chat_type_chat))) {
@@ -242,7 +243,6 @@ public class Chat_room extends AppCompatActivity implements View.OnClickListener
             databaseReference.push().setValue(obj);
     }
 
-    //Todo enter a new message to the chat
     @Override
     public void onClick(View v){
         if(v == send_button){

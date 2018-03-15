@@ -36,7 +36,10 @@
     <string name="firebase_chat_msg_type">type</string>
     <string name="firebase_chat_msg_id">id</string>
 
-    <!-- Contants for chat type -->
+    <string name="firebase_longitude">lon</string>
+    <string name="firebase_latitude">lat</string>
+
+    <!-- Constants for chat type -->
     <string name="chat_type_chat">1</string>
     <string name="chat_type_game">2</string>
     <string name="chat_pass_type">TYPE</string>
@@ -88,6 +91,7 @@
 
     <string name="title_activity_tabbed">Hunt Chat</string>
     <string name="action_settings">Settings</string>
+    <string name="permission_denied">Permission denied, the application might not work as expected.</string>
 
     <string name="save_changes">Save changes</string>
     <string name="confirm">Confirm</string>
@@ -114,5 +118,20 @@
 
     <!-- Strings related to friends -->
     <string name="friend_list">Friend list</string>
+
+    <!-- Strings related to location -->
+    <string name="open_gps_title">Please enable the GPS for the application to work properly</string>
+    <string name="open_gps_positive">OK</string>
+    <string name="open_gps_negative">Cancel</string>
+    <string name="open_gps_denied">The application doesnt work well without the GPS</string>
+    
+    <!-- Strings related to game -->
+    <string name="game_create_new">Create a new game</string>
+    <string name="game_title">Hunt title</string>
+    <string name="game_image_clue">Upload your image clue: </string>
+    <string name="game_group_profile">This will be the group profile picture.</string>
+    <string name="game_authorised_access">Authorised access</string>
+    <string name="game_public_game">Public game</string>
+    <string name="game_create">Create game</string>
 
 </resources>

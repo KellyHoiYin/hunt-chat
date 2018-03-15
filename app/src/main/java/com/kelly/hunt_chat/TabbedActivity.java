@@ -1,9 +1,12 @@
 package com.kelly.hunt_chat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -12,13 +15,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TabbedActivity extends AppCompatActivity {
 
@@ -26,6 +33,14 @@ public class TabbedActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     public Toolbar toolbar;
     public String[] tabtitles = {"About Me", "Chats", "Nearby Games", "Friends", "Settings"};
+
+    public static final int GRANT_READ_LOCATION_PERMISSION = 1;
+
+    private FirebaseUser user;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
+
+    GPSTracker gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +84,26 @@ public class TabbedActivity extends AppCompatActivity {
             }
         });
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child(getString(R.string.firebase_user)).child(user.getUid());
+
+        //check permission for the location
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    GRANT_READ_LOCATION_PERMISSION);
+        } else {
+            getLocation();
+        }
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(TabbedActivity.this, Game_creation.class));
             }
         });
 
@@ -137,6 +166,46 @@ public class TabbedActivity extends AppCompatActivity {
             mViewPager.setCurrentItem(3);
         }else if(tab.equals("4")){
             mViewPager.setCurrentItem(4);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case GRANT_READ_LOCATION_PERMISSION : {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getLocation();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Permission denied, the application might not work as expected.", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
+    }
+
+    private void getLocation(){
+        gps = new GPSTracker(this);
+
+        // Check if GPS enabled
+        if(gps.canGetLocation()) {
+
+            double latitude = gps.getLatitude();
+            double longitude = gps.getLongitude();
+
+            //update the user location when the location is determined
+            Map<String, Object> updateLocation = new HashMap<>();
+            updateLocation.put(getString(R.string.firebase_longitude), longitude);
+            updateLocation.put(getString(R.string.firebase_latitude), latitude);
+
+            databaseReference.updateChildren(updateLocation);
+        } else {
+            // Can't get location.
+            // GPS or network is not enabled.
+            // Ask user to enable GPS/network in settings.
+            gps.showSettingsAlert();
+            getLocation();
+            //will repeat until the user opens the GPS
         }
     }
 }

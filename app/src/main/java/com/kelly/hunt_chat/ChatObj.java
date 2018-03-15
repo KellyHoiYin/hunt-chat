@@ -13,7 +13,8 @@ public class ChatObj {
     private boolean publ;
     private boolean authorised;
     private String title;
-    private String location;
+    private double location_lad;
+    private double location_long;
     private String status;
     private String winner;
 
@@ -74,12 +75,20 @@ public class ChatObj {
         this.title = title;
     }
 
-    public String getLocation() {
-        return location;
+    public double getLocation_lad() {
+        return location_lad;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLocation_lad(double location_lad) {
+        this.location_lad = location_lad;
+    }
+
+    public double getLocation_long() {
+        return location_long;
+    }
+
+    public void setLocation_long(double location_long) {
+        this.location_long = location_long;
     }
 
     public String getStatus() {

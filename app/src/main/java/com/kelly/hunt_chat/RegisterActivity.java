@@ -255,7 +255,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getImage();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Permission denied, the application might not work as expected.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.permission_denied), Toast.LENGTH_SHORT).show();
                 }
                 return;
             }

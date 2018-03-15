@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.kelly.hunt_chat.Game_creation">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_10">
+
+        <TextView
+            android:id="@+id/game_creation_title_game_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_title"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:layout_marginBottom="@dimen/margin_5"/>
+
+        <EditText
+            android:id="@+id/game_creation_text_game_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/game_creation_title_game_title"
+            android:layout_marginBottom="@dimen/margin_10"/>
+
+        <TextView
+            android:id="@+id/game_creation_title_first_clue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_image_clue"
+            android:layout_below="@+id/game_creation_text_game_title"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:layout_marginBottom="@dimen/margin_5"/>
+
+        <ImageButton
+            android:id="@+id/game_creation_btn_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@+id/game_creation_title_first_clue"
+            android:layout_centerHorizontal="true"
+            android:src="@android:drawable/ic_menu_camera"
+            android:layout_marginBottom="@dimen/margin_5"/>
+
+        <TextView
+            android:id="@+id/game_creation_title_group_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_group_profile"
+            android:layout_below="@id/game_creation_btn_image"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/margin_10"/>
+
+        <RelativeLayout
+            android:id="@+id/game_creation_layout_access"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/game_creation_title_group_pic"
+            android:layout_marginBottom="@dimen/margin_10">
+
+            <TextView
+                android:id="@+id/game_creation_title_access"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/game_authorised_access"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:layout_centerVertical="true"/>
+
+            <ImageButton
+                android:id="@+id/game_creation_info_access"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/game_creation_title_access"
+                app:srcCompat="@drawable/info_icon"
+                android:background="@color/windowBackground"
+                android:layout_margin="@dimen/margin_5"
+                android:layout_centerVertical="true"/>
+
+            <Switch
+                android:id="@+id/game_creation_btn_access"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:checked="false"
+                android:text="" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/game_creation_layout_public"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/game_creation_layout_access"
+            android:layout_marginBottom="@dimen/margin_10">
+
+            <TextView
+                android:id="@+id/game_creation_title_public"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/game_public_game"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:layout_centerVertical="true"/>
+
+            <ImageButton
+                android:id="@+id/game_creation_info_public"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/game_creation_title_public"
+                app:srcCompat="@drawable/info_icon"
+                android:background="@color/windowBackground"
+                android:layout_margin="@dimen/margin_5"
+                android:layout_centerVertical="true"/>
+
+            <Switch
+                android:id="@+id/game_creation_btn_public"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:checked="true"
+                android:text="" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/game_creation_btn_create"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/game_creation_layout_public"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:text="@string/game_create"
+            android:textAllCaps="false"
+            android:stateListAnimator="@null"
+            android:textStyle="normal"/>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
