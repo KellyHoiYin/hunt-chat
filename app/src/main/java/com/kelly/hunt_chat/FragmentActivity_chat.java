@@ -134,6 +134,9 @@ public class FragmentActivity_chat extends Fragment{
                                 } else {
                                     if(model.getType().equals(getString(R.string.chat_type_game))){
                                         viewHolder.display_name.setText(model.getTitle());
+                                        if(model.isCompleted()){
+                                            viewHolder.last_message.setText(getString(R.string.game_msg_complate));
+                                        }
 
                                         storageReferenceChat.child(chatId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                             @Override

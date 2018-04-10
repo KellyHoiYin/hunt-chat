@@ -75,7 +75,7 @@ public class FragmentActivity_game extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        final View view = inflater.inflate(R.layout.tabbed_game, container, false);
+        View view = inflater.inflate(R.layout.tabbed_game, container, false);
 
         ngRcv = (RecyclerView) view.findViewById(R.id.nearby_game_rcv);
 
@@ -87,7 +87,7 @@ public class FragmentActivity_game extends Fragment{
         databaseReferenceUser = FirebaseDatabase.getInstance().getReference().child(getString(R.string.firebase_user));
         storageReference = FirebaseStorage.getInstance().getReference(getString(R.string.firebase_chat));
 
-        //Todo load nearby games that is not completed
+        //Todo disable the join button if the user is in the parti list
         //Nearby Games Handler
         LinearLayoutManager ngLayoutManager = new LinearLayoutManager(getActivity());
         ngRcv.setLayoutManager(ngLayoutManager);
@@ -133,7 +133,6 @@ public class FragmentActivity_game extends Fragment{
                                     builder.setView(view);
                                     builder.show();
 
-                                    //Todo add search for same id
                                     ImageButton ib_hunt = (ImageButton) view.findViewById(R.id.join_btn_image_hunt);
                                     ib_hunt.setOnClickListener(new View.OnClickListener() {
                                         @Override
@@ -186,7 +185,6 @@ public class FragmentActivity_game extends Fragment{
 
         ngRcv.setAdapter(ngAdapter);
 
-        //Todo load friends games that is not completed
         //Friends game Handler
         LinearLayoutManager fgLayoutManager = new LinearLayoutManager(getActivity());
         fgRcv.setLayoutManager(fgLayoutManager);
@@ -315,7 +313,7 @@ public class FragmentActivity_game extends Fragment{
         Location.distanceBetween( lat, lon, curLat, curLon, distance);
         Log.i(TAG, "distance: " + distance[0]);
 
-        return distance[0] < 300;
+        return distance[0] < 500;
     }
 
     private void getLocation(){

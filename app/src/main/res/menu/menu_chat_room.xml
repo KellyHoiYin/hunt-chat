@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.kelly.hunt_chat.TabbedActivity">
+
+    <item android:id="@+id/chat_room_options_complete"
+        android:title="@string/game_option_complete"
+        app:showAsAction="never" />
+</menu>

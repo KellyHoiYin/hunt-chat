@@ -218,6 +218,32 @@ public class Chat_room extends AppCompatActivity implements View.OnClickListener
     }
 
     @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        if(chat_type.equals(getString(R.string.chat_type_game))){
+
+            //check if is owner and the game is not completed
+            databaseReference.child(passed_id).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    ChatObj cur = dataSnapshot.getValue(ChatObj.class);
+                    if(user.getUid().equals(cur.getOwner()) && !cur.isCompleted()){
+                        MenuInflater inflater = getMenuInflater();
+                        inflater.inflate(R.menu.menu_chat_room, menu);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            return true;
+        } else
+            return false; //dont need to create the menu
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -227,6 +253,10 @@ public class Chat_room extends AppCompatActivity implements View.OnClickListener
                 bundle.putString("TabNumber", "1");
                 intent.putExtras(bundle);
                 startActivity(intent);
+                break;
+            case R.id.chat_room_options_complete:
+                databaseReference.child(passed_id).child(getString(R.string.firebase_chat_completed)).setValue(true);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -268,7 +298,6 @@ public class Chat_room extends AppCompatActivity implements View.OnClickListener
             curMsg.setType(getString(R.string.chat_msg_normal));
             curMsg.setUser_id(user.getUid());
 
-            //ToDO handle null when it is from new friend chat
             msgRef.push().setValue(curMsg);
             input_text.setText(null);
         }

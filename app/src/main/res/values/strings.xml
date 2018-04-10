@@ -139,5 +139,7 @@
     <string name="game_hunter">Hunter</string>
     <string name="game_spectator">Spectator</string>
     <string name="game_select_option">Please select your role: </string>
+    <string name="game_option_complete">Mark as complete</string>
+    <string name="game_msg_complate">Game completed</string>
 
 </resources>
