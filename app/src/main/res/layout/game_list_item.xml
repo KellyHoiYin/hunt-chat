@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/margin_2">
+    android:padding="@dimen/margin_2"
+    android:id="@+id/game_list_item_layout"
+    android:background="@color/windowBackground">
 
     <RelativeLayout
-        android:id="@+id/friend_list_item_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/friend_list_image"
+        android:id="@+id/game_list_image"
         android:layout_width="@dimen/photo_size"
         android:layout_height="@dimen/photo_size"
         app:srcCompat="@drawable/ic_texture_black_24dp"/>
@@ -19,19 +20,31 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/friend_list_image"
+        android:layout_toRightOf="@+id/game_list_image"
         android:layout_centerVertical="true"
         android:layout_marginStart="@dimen/margin_5"
         android:layout_marginLeft="@dimen/margin_5">
 
         <TextView
-            android:id="@+id/friend_list_name"
+            android:id="@+id/game_list_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:textAppearance"
             android:text="display name"/>
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/game_btn_join"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="@string/game_join"
+        android:textAllCaps="false"
+        android:stateListAnimator="@null"
+        android:textStyle="normal"
+        android:padding="10dp"/>
 
     </RelativeLayout>
 </LinearLayout>

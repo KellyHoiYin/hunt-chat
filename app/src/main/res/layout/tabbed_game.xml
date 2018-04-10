@@ -4,21 +4,74 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kelly.hunt_chat.TabbedActivity">
+    tools:context="com.kelly.hunt_chat.TabbedActivity"
+    android:background="@color/lightGrey">
 
     <RelativeLayout
-        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
+        <View
+            android:id="@+id/game_tabbed_line_0"
+            android:layout_width="fill_parent"
+            android:layout_height="20dp"/>
 
-        <TextView
-            android:id="@+id/section_label"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/nearby_game_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="Games" />
+            android:layout_below="@+id/game_tabbed_line_0"
+            android:padding="10dp"
+            android:background="@color/windowBackground">
+
+            <TextView
+                android:id="@+id/nearby_game_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/game_nearby"
+                android:textAppearance="?android:textAppearanceSmall"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/nearby_game_rcv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nearby_game_title">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/game_tabbed_line_1"
+            android:layout_width="fill_parent"
+            android:layout_height="20dp"
+            android:layout_below="@+id/nearby_game_layout"/>
+
+        <RelativeLayout
+            android:id="@+id/friend_game_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/game_tabbed_line_1"
+            android:padding="10dp"
+            android:background="@color/windowBackground">
+
+            <TextView
+                android:id="@+id/friend_game_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/game_friends"
+                android:textAppearance="?android:textAppearanceSmall"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/friend_game_rcv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/friend_game_title">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </RelativeLayout>
+
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

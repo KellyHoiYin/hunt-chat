@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:padding="@dimen/margin_2"
+        android:layout_marginBottom="@dimen/margin_10">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/join_layout_hunt"
+            android:layout_marginRight="@dimen/margin_10">
+
+            <ImageButton
+                android:id="@+id/join_btn_image_hunt"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/lightGrey"
+                android:src="@drawable/ic_hunt"
+                android:layout_margin ="@dimen/margin_10"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/game_hunter"
+                android:layout_below="@+id/join_btn_image_hunt"
+                android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/join_layout_hunt">
+
+            <ImageButton
+                android:id="@+id/join_btn_image_spec"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/lightGrey"
+                android:src="@drawable/ic_spec"
+                android:layout_margin ="@dimen/margin_10"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/game_spectator"
+                android:layout_below="@+id/join_btn_image_spec"
+                android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
+
+
+
+
+    </RelativeLayout>
+</RelativeLayout>

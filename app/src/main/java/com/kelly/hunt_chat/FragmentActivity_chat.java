@@ -163,7 +163,9 @@ public class FragmentActivity_chat extends Fragment{
                         }
 
                         if(!found){
-                            viewHolder.layout.setVisibility(View.GONE);
+                            ViewGroup.LayoutParams lp = viewHolder.layout.getLayoutParams();
+                            lp.height = 0;
+                            viewHolder.layout.setLayoutParams(lp);
                         }
                     }
 

@@ -3,6 +3,7 @@ package com.kelly.hunt_chat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -13,7 +14,7 @@ import android.widget.TextView;
 public class ChatMenuItemHolder extends RecyclerView.ViewHolder {
     public ImageView image;
     public TextView display_name;
-    public RelativeLayout layout;
+    public LinearLayout layout;
     public TextView last_message;
 
     public ChatMenuItemHolder(View viewitem){
@@ -22,6 +23,6 @@ public class ChatMenuItemHolder extends RecyclerView.ViewHolder {
         image = (ImageView) itemView.findViewById(R.id.chat_menu_image);
         display_name = (TextView) itemView.findViewById(R.id.chat_menu_name);
         last_message = (TextView) itemView.findViewById(R.id.chat_menu_msg);
-        layout = (RelativeLayout) itemView.findViewById(R.id.chat_menu_layout);
+        layout = (LinearLayout) itemView.findViewById(R.id.chat_menu_layout);
     }
 }

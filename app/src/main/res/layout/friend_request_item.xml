@@ -20,8 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/friend_req_image"
         android:layout_centerVertical="true"
-        android:layout_marginStart="@dimen/margin_2"
-        android:layout_marginLeft="@dimen/margin_2">
+        android:layout_marginStart="@dimen/margin_5"
+        android:layout_marginLeft="@dimen/margin_5">
 
         <TextView
             android:id="@+id/friend_req_name"

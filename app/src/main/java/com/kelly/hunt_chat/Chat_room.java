@@ -8,6 +8,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -86,120 +88,122 @@ public class Chat_room extends AppCompatActivity implements View.OnClickListener
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                ChatObj cur = new ChatObj();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    ChatObj cur = snapshot.getValue(ChatObj.class);
+                    cur = snapshot.getValue(ChatObj.class);
                     if(chat_type.equals(getString(R.string.chat_type_chat))){       //friend chats
                         if(cur.getType().equals(chat_type)){
                             for(ChatPartiObj elem : cur.getPartis()){
-                                if(!recordExist && elem.getId().equals(user.getUid())){
+                                if(elem.getId().equals(user.getUid())){
                                     for(ChatPartiObj e : cur.getPartis()){
                                         if(!recordExist && e.getId().equals(passed_id)){
                                             recordExist = true;
+                                            chat_id = snapshot.getKey();
                                             break;
                                         }
                                     }
                                 }
+
+                                if(recordExist) break;
                             }
                         }
-                    }
-                    else {
+                    } else {
                         //the id is passed when this is triggered, so it must exist
-                        recordExist = true;
+                        if(cur.getType().equals(chat_type) && snapshot.getKey().equals(passed_id)){
+                            recordExist = true;
+                            chat_id = passed_id;
+                            break;
+                        }
                     }
 
-                    if(recordExist) {
-                        chat_id = snapshot.getKey();
+                    if(recordExist) break;
 
-                        if(chat_type.equals(getString(R.string.chat_type_game))){
-                            chat_id = passed_id;
-                        }
+                }
 
-                        msgRef = databaseReference.child(chat_id).child(getString(R.string.firebase_chat_message));
+                if(recordExist) {
 
-                        //setting the chat name
-                        if(chat_type.equals(getString(R.string.chat_type_chat))){
-                            //get friend's name
-                            for(ChatPartiObj elem : cur.getPartis()){
-                                if(!elem.getId().equals(user.getUid())){
-                                    userRef.child(elem.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                            UserInformation friend = dataSnapshot.getValue(UserInformation.class);
-                                            setTitle(friend.getName());
-                                        }
+                    msgRef = databaseReference.child(chat_id).child(getString(R.string.firebase_chat_message));
 
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
-
-                                        }
-                                    });
-                                }
-                            }
-                        } else {
-                            if(chat_type.equals(getString(R.string.chat_type_game))){
-                                setTitle(cur.getTitle());
-                            }
-                        }
-
-                        LinearLayoutManager flLayoutManager = new LinearLayoutManager(getApplicationContext());
-                        cMsgRcv.setLayoutManager(flLayoutManager);
-
-                        Query query_msgs = msgRef.orderByKey();
-
-                        cMsgAdapter = new FirebaseRecyclerAdapter<ChatMessage, ChatMessageItemHolder>(
-                                ChatMessage.class, R.layout.chat_msg_item, ChatMessageItemHolder.class, query_msgs
-                        ) {
-                            @Override
-                            protected void populateViewHolder(final ChatMessageItemHolder viewHolder, ChatMessage model, int position) {
-                                final String userId = model.getUser_id();
-
-                                //this message is sent by this logged in user
-                                if(userId.equals(user.getUid())){
-                                    viewHolder.message.setBackgroundResource(R.drawable.rounded_chat_right);
-                                    RelativeLayout.LayoutParams msg_lp = (RelativeLayout.LayoutParams) viewHolder.message.getLayoutParams();
-                                    msg_lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                                    viewHolder.message.setLayoutParams(msg_lp);
-
-                                    RelativeLayout.LayoutParams name_lp = (RelativeLayout.LayoutParams) viewHolder.display_name.getLayoutParams();
-                                    name_lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                                    viewHolder.display_name.setLayoutParams(name_lp);
-                                }
-
-                                userRef.child(userId).child(getString(R.string.firebase_displayname)).addListenerForSingleValueEvent(new ValueEventListener() {
+                    //setting the chat name
+                    if(chat_type.equals(getString(R.string.chat_type_chat))){
+                        //get friend's name
+                        for(ChatPartiObj elem : cur.getPartis()){
+                            if(!elem.getId().equals(user.getUid())){
+                                userRef.child(elem.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        viewHolder.display_name.setText(dataSnapshot.getValue().toString());
+                                        UserInformation friend = dataSnapshot.getValue(UserInformation.class);
+                                        setTitle(friend.getName());
                                     }
 
                                     @Override
                                     public void onCancelled(DatabaseError databaseError) {
-                                        viewHolder.display_name.setText("");
+
                                     }
                                 });
-
-                                viewHolder.message.setText(model.getContent());
-                                viewHolder.message.setPadding(20,6,20,6);
                             }
-                        };
-
-                        cMsgAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-                            @Override
-                            public void onItemRangeInserted(int positionStart, int itemCount) {
-                                cMsgRcv.scrollToPosition(positionStart);
-                            }
-                        });
-
-
-                        cMsgRcv.setAdapter(cMsgAdapter);
-
-                        break;
+                        }
                     } else {
-                        //create a new chat when there is no record of this user with the friend conversation
-                        if(chat_type.equals(getString(R.string.chat_type_chat))) {
-                            createNewChat();
+                        if(chat_type.equals(getString(R.string.chat_type_game))){
+                            setTitle(cur.getTitle());
                         }
                     }
 
+                    LinearLayoutManager flLayoutManager = new LinearLayoutManager(getApplicationContext());
+                    cMsgRcv.setLayoutManager(flLayoutManager);
+
+                    Query query_msgs = msgRef.orderByKey();
+
+                    cMsgAdapter = new FirebaseRecyclerAdapter<ChatMessage, ChatMessageItemHolder>(
+                            ChatMessage.class, R.layout.chat_msg_item, ChatMessageItemHolder.class, query_msgs
+                    ) {
+                        @Override
+                        protected void populateViewHolder(final ChatMessageItemHolder viewHolder, ChatMessage model, int position) {
+                            final String userId = model.getUser_id();
+
+                            //this message is sent by this logged in user
+                            if(userId.equals(user.getUid())){
+                                viewHolder.message.setBackgroundResource(R.drawable.rounded_chat_right);
+                                RelativeLayout.LayoutParams msg_lp = (RelativeLayout.LayoutParams) viewHolder.message.getLayoutParams();
+                                msg_lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                                viewHolder.message.setLayoutParams(msg_lp);
+
+                                RelativeLayout.LayoutParams name_lp = (RelativeLayout.LayoutParams) viewHolder.display_name.getLayoutParams();
+                                name_lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                                viewHolder.display_name.setLayoutParams(name_lp);
+                            }
+
+                            userRef.child(userId).child(getString(R.string.firebase_displayname)).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    viewHolder.display_name.setText(dataSnapshot.getValue().toString());
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    viewHolder.display_name.setText("");
+                                }
+                            });
+
+                            viewHolder.message.setText(model.getContent());
+                            viewHolder.message.setPadding(20,6,20,6);
+                        }
+                    };
+
+                    cMsgAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                        @Override
+                        public void onItemRangeInserted(int positionStart, int itemCount) {
+                            cMsgRcv.scrollToPosition(positionStart);
+                        }
+                    });
+
+
+                    cMsgRcv.setAdapter(cMsgAdapter);
+                } else {
+                    //create a new chat when there is no record of this user with the friend conversation
+                    if(chat_type.equals(getString(R.string.chat_type_chat))) {
+                        createNewChat();
+                    }
                 }
             }
 
@@ -223,7 +227,6 @@ public class Chat_room extends AppCompatActivity implements View.OnClickListener
                 bundle.putString("TabNumber", "1");
                 intent.putExtras(bundle);
                 startActivity(intent);
-                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -241,6 +244,15 @@ public class Chat_room extends AppCompatActivity implements View.OnClickListener
 
             obj.setPartis(partis);
             databaseReference.push().setValue(obj);
+
+            //restart activity
+            finish();
+            Intent intent = new Intent(this, Chat_room.class);
+            Bundle bundle = new Bundle();
+            bundle.putString(getString(R.string.chat_pass_type), getString(R.string.chat_type_chat));
+            bundle.putString(getString(R.string.chat_pass_id), passed_id);
+            intent.putExtras(bundle);
+            startActivity(intent);
     }
 
     @Override
@@ -256,6 +268,7 @@ public class Chat_room extends AppCompatActivity implements View.OnClickListener
             curMsg.setType(getString(R.string.chat_msg_normal));
             curMsg.setUser_id(user.getUid());
 
+            //ToDO handle null when it is from new friend chat
             msgRef.push().setValue(curMsg);
             input_text.setText(null);
         }

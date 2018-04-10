@@ -23,7 +23,7 @@
     <string name="firebase_chat_authorised">authorised</string>
     <string name="firebase_chat_title">title</string>
     <string name="firebase_chat_location">location</string>
-    <string name="firebase_chat_status">status</string>
+    <string name="firebase_chat_completed">completed</string>
     <string name="firebase_chat_winner">winner</string>
 
     <string name="firebase_chat_participant">partis</string>
@@ -133,5 +133,11 @@
     <string name="game_authorised_access">Authorised access</string>
     <string name="game_public_game">Public game</string>
     <string name="game_create">Create game</string>
+    <string name="game_join">Join</string>
+    <string name="game_nearby">Nearby Games</string>
+    <string name="game_friends">Friends Games</string>
+    <string name="game_hunter">Hunter</string>
+    <string name="game_spectator">Spectator</string>
+    <string name="game_select_option">Please select your role: </string>
 
 </resources>

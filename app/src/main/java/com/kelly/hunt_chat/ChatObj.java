@@ -15,7 +15,7 @@ public class ChatObj {
     private String title;
     private double location_lad;
     private double location_long;
-    private String status;
+    private boolean completed;
     private String winner;
 
     private List<ChatPartiObj> partis;
@@ -91,12 +91,12 @@ public class ChatObj {
         this.location_long = location_long;
     }
 
-    public String getStatus() {
-        return status;
+    public boolean isCompleted() {
+        return completed;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     public String getWinner() {
