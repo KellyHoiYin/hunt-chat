@@ -87,7 +87,6 @@ public class FragmentActivity_game extends Fragment{
         databaseReferenceUser = FirebaseDatabase.getInstance().getReference().child(getString(R.string.firebase_user));
         storageReference = FirebaseStorage.getInstance().getReference(getString(R.string.firebase_chat));
 
-        //Todo disable the join button if the user is in the parti list
         //Nearby Games Handler
         LinearLayoutManager ngLayoutManager = new LinearLayoutManager(getActivity());
         ngRcv.setLayoutManager(ngLayoutManager);
@@ -105,7 +104,7 @@ public class FragmentActivity_game extends Fragment{
                 ViewGroup.LayoutParams lp = viewHolder.layout.getLayoutParams();
 
                 if(model.getType().equals(getString(R.string.chat_type_game))){
-                    if(!model.isCompleted()){
+                    if(!model.isCompleted() && model.isPubl()){
                         if(isNear(model.getLocation_lad(), model.getLocation_long())){
                             //populate
                             viewHolder.display_name.setText(model.getTitle());
@@ -123,7 +122,6 @@ public class FragmentActivity_game extends Fragment{
                             viewHolder.button_join.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Toast.makeText(getActivity(), chatId, Toast.LENGTH_SHORT).show();
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                                     LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -168,6 +166,9 @@ public class FragmentActivity_game extends Fragment{
                                     });
                                 }
                             });
+
+                            if(isParti(model.getPartis()))
+                                viewHolder.button_join.setEnabled(false);
                         } else {
                             lp.height = 0;
                             viewHolder.layout.setLayoutParams(lp);
@@ -273,6 +274,9 @@ public class FragmentActivity_game extends Fragment{
                                                 });
                                             }
                                         });
+
+                                        if(isParti(model.getPartis()))
+                                            viewHolder.button_join.setEnabled(false);
                                     }
                                 }
 
@@ -333,5 +337,13 @@ public class FragmentActivity_game extends Fragment{
             getLocation();
             //will repeat until the user opens the GPS
         }
+    }
+
+    private boolean isParti(List<ChatPartiObj> partis){
+        for(ChatPartiObj cur : partis){
+            if(cur.getId().equals(user.getUid()))
+                return true;
+        }
+        return false;
     }
 }
