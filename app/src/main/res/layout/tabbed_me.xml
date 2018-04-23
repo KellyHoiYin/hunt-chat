@@ -11,14 +11,53 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <TextView
             android:id="@+id/section_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="About Me" />
+            android:text="Hunt &amp; Chat"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:layout_margin="20dp"/>
+
+        <TextView
+            android:id="@+id/instruction"
+            android:layout_below="@+id/section_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:text="Welcome!\nThis is an application that allows you to play an offline treasure hunting game by helping you to find players online geographically."
+            android:maxLines="10"
+            android:padding="@dimen/margin_5"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:layout_margin="@dimen/margin_5"/>
+
+        <TextView
+            android:id="@+id/instruction_1"
+            android:layout_below="@+id/instruction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="1. Keep your GPS opened to find nearby players.\n2. Prepare a gift for your new friends.\n3. Create a game.\n4. Chat with the players to find the treasure. \n5. Be friends with them!\n6. Or you can just join a game and make friends!"
+            android:maxLines="10"
+            android:padding="@dimen/margin_5"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:layout_margin="@dimen/margin_5"/>
+
+        <TextView
+            android:id="@+id/regards"
+            android:layout_below="@+id/instruction_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:text="Enjoy!\nSincerely\nHunt &amp; Chat Developer"
+            android:maxLines="10"
+            android:padding="@dimen/margin_5"
+            android:layout_marginTop="@dimen/margin_10"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:layout_margin="@dimen/margin_5"/>
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

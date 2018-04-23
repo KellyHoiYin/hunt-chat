@@ -32,7 +32,7 @@ public class TabbedActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     public Toolbar toolbar;
-    public String[] tabtitles = {"About Me", "Chats", "Nearby Games", "Friends", "Settings"};
+    public String[] tabtitles = {"Hi there", "Chats", "Nearby Games", "Friends", "Settings"};
 
     public static final int GRANT_READ_LOCATION_PERMISSION = 1;
 
